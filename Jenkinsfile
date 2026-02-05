@@ -1,25 +1,23 @@
-pipeline
-{
+pipeline {
     agent any
-    stages
-    {
-        stage
-        {
-            steps
-            {
+
+    stages {
+        stage('Checkout Code') {
+            steps {
                 echo "Checking out the code"
                 checkout scm
             }
         }
-        stage{
-            steps{
+
+        stage('Build Docker Image') {
+            steps {
                 echo 'Building a Docker Image'
-                sh 'docker build -t devops-web:latest' .
+                sh 'docker build -t devops-web:latest .'
             }
         }
-        stage{
-            steps
-            {
+
+        stage('Deploy Container') {
+            steps {
                 echo 'Deploy the Image'
                 sh '''
                 docker stop devops-web || true
